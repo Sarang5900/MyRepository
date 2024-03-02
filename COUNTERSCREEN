@@ -1,0 +1,358 @@
+<script type='text/javascript' src='js/ajaxUtility.js'></script>
+<mednet:messageTag/>
+
+<div class="wideDIV patientHeaderBand borderBox" style="border-top:none;">
+
+
+   <div class="wideDIV listHeader borderBox" style="border-top: none; padding: 8px;">
+      <div class="pull_left borderBox" style="width:40%;padding-left: 3px;">
+         <div class="right_cli_search" style="width:calc(100% - 20px);">
+            <input class="textshadpatient textIndent3 right_cli_searchInput" type="text" placeholder="Enter Counter Name" id="counterName" tabindex="203">
+         </div>
+      </div>
+      <div class="pull_left">
+         <div class="labelb5">Consultation Counter</div>
+         <div class="pull_left" style="width:150px;margin-left: 10px;">
+            <label class="selectOptionCombo" style="width:100%;">
+               <select class="pointer textshadpatient" style="height: 25px !important;width:100%;" id="consultationCounterFlag" tabindex="202">
+                  <option value="SIMPLE">SIMPLE</option>
+                  <option value="CONSULTATION">CONSULTATION</option>
+                  <option value="ADVANCED">ADVANCED</option>
+               </select>
+            </label>
+         </div>
+      </div>
+      <div onclick="saveCounter();" tabindex="203" onkeypress="if(event.keyCode == 13) saveCounter();" style="margin-left: 10px; display: none;" title="Click to Add" class="right_cli_AddIcon">
+         <div class="fa_mednet fa-plus fa-search-plus-custom"></div>
+      </div>
+   </div>
+   <div class="wideDIV borderBox" style="padding: 7px 10px; background-color: #ffffff">
+      <div class="wideDIV">
+         <div style="width: 204px;" class="pull_left">
+            <label class="rcLabel" for="consultationAutoPrint" style="width: 150px;">Consultation Auto Print</label>
+            <input type="checkbox" id="consultationAutoPrint" class="rcInput" onchange="enableDisableSettingDIV();">
+         </div>
+         <div style="width: 330px;" class="pull_left">
+            <label class="rcLabel" for="thermalPrint" style="width: 95px;">Thermal Print</label>
+            <input type="checkbox" id="thermalPrint" class="rcInput">
+         </div>
+      </div>
+      <div id="settingsDIV" class="wideDIV">
+         <div class="wideDIV labelb5Top">
+            <div style="width: 204px; margin-top:3px;" class="pull_left">
+               <label style="width: 150px;" for="printPreview" class="rcLabel">Show Print Preview</label>
+               <input type="checkbox" id="printPreview" class="rcInput">
+            </div>
+            <div class="pull_left" style="width:350px;">
+               <div class="labelb5" style="width:150px;">First Consultation Sticker</div>
+               <div class="pull_left" style="width: 150px; margin-left:10px;">
+                   <label class="selectOptionCombo" style="width: 100%;">
+                      <select class="pointer textshadpatient" id="firstConsultationSticker" style="width: 100%;height: 26px !important;">
+                         <option value="NONE">None</option>
+                         <option value="01">01 Nos</option>
+                         <option value="03">03 Nos</option>
+                         <option value="06">06 Nos</option>
+                         <option value="12">12 Nos</option>
+                      </select>
+                   </label>
+               </div>
+            </div>
+            <div class="pull_left" style="width: 400px;">
+               <div class="labelb5" style="width: 180px;"> Followup Consultation Sticker</div>
+               <div style="width: 180px;">
+                   <label class="selectOptionCombo" style="width: 100%;">
+                      <select class="pointer textshadpatient" id="followupConsultationSticker" style="width: 100%;height: 26px !important;">
+                         <option value="NONE">None</option>
+                         <option value="01">01 Nos</option>
+                         <option value="03">03 Nos</option>
+                         <option value="06">06 Nos</option>
+                         <option value="12">12 Nos</option>
+                      </select>
+                   </label>
+               </div>
+            </div>
+         </div>
+         <div class="wideDIV labelb5Top">
+            <div style="width: 204px;" class="pull_left">
+               <label style="width: 150px;" for="blankOPDSheet" class="rcLabel">Blank OPD Sheet</label>
+               <input type="checkbox" id="blankOPDSheet" class="rcInput">
+            </div>
+            <div class="pull_left" style="width:345px;">
+               <div class="labelb5" style="width:150px;">All Bill Auto Print</div>
+               <div class="pull_left" style="width: 150px; margin-left:10px;">
+                   <label class="selectOptionCombo" style="width: 100%;">
+                      <select class="pointer textshadpatient" id="allBillAutoPrint" style="height: 25px ! important; width: 100%;">
+                         <option value="NONE">None</option>
+                         <option value="REGULAR">REGULAR</option>
+                         <option value="THERMAL">THERMAL</option>
+                      </select>
+                   </label>
+               </div>
+            </div>
+            <div style="width: 330px;" class="pull_left">
+               <label style="margin-left: 5px; width: 110px;"  for="allReceiptPrint" class="rcLabel">All Receipt Print</label>
+               <input type="checkbox" id="allReceiptPrint" class="rcInput">
+            </div>
+         </div>
+         <div class="wideDIV labelb5Top">
+            <div style="width: 200px;" class="pull_left">
+               <label class="rcLabel" for="OPDStickerPrint" style="width: 150px;">OPD Sticker Print</label>
+               <input type="checkbox" id="OPDStickerPrint" class="rcInput ">
+            </div>
+         </div>
+      </div>
+      <div class="wideDIV labelb10Top">
+         <div style="margin: 0px;"onclick = "saveCounter();" class="btnCommon">Save</div>
+         <div style="margin: 0 0 0 5px;" class="btnCommonLight" onclick="clearCounterFields();">Reset</div>
+      </div>
+   </div>
+    <div class="wideDIV listHeader borderBox" id="counterListHeader" style=" padding: 3px;">
+      <div style="padding-left: 10px; width: calc(14% - 30px);" class="labelb5 borderBox">Counter Name</div>
+      <div style="width: 10%;padding-right: 10px;" class="labelb5 borderBox">Consultation Counter</div>
+      <div style="width: 8%;text-align:center;" class="labelb5 borderBox">Consultation Auto Print</div>
+      <div style="width: 8%;text-align:center;" class="labelb5 borderBox">Thermal Print</div>
+      <div style="width: 8%;text-align:center;" class="labelb5 borderBox">Print Preview</div>
+      <div style="width: 8%;padding-right: 10px;" class="labelb5 borderBox">First Consultation Sticker</div>
+      <div style="width: 12%;padding-right: 10px;" class="labelb5 borderBox">Followup Consultation Sticker</div>
+      <div style="width: 8%;text-align:center;" class="labelb5 borderBox">Consultation OPD Sheet</div>
+      <div style="width: 8%;padding-right: 10px;" class="labelb5 borderBox">All Bill Auto Print</div>
+      <div style="width: 8%;text-align:center;" class="labelb5 borderBox">All Receipt Auto Print</div>
+      <div style="width: 8%;text-align:center;" class="labelb5 borderBox">OPD Sticker Print</div>
+   </div>
+   <div class="wideDIV" style="height:350px; overflow-y:auto; background-color: #ffffff" id="counterList"> </div>
+   <div id="counterListDIV" class="wideDIV" style="max-height:290px; overflow-y:auto; display: none;"></div>
+   <input type="hidden" value="0" id="hiddenCounterID">
+
+</div>
+
+
+
+
+<script>
+
+    Ext.onReady(function() {
+        disableSettingDIV();
+        listCounter();
+    });
+
+    function saveCounter() {
+        var counterID = document.getElementById('hiddenCounterID').value;
+        var counterName = document.getElementById('counterName').value.trim();
+        var consultationCounter = document.getElementById('consultationCounterFlag').value;
+
+        let payload = {
+            counterID: counterID,
+            counterName: counterName,
+            opdRegnNReceipt: consultationCounter,
+            consultationAutoPrint: document.getElementById('consultationAutoPrint').checked ? "Y" : "N",
+            showPrintPreview: document.getElementById('printPreview').checked ? "Y" : "N",
+            firstConsultationSticker: document.getElementById('firstConsultationSticker').value,
+            followupConsultationSticker: document.getElementById('followupConsultationSticker').value,
+            blankOPDSheet: document.getElementById('blankOPDSheet').checked ? "Y" : "N",
+            allBillAutoPrint: document.getElementById('allBillAutoPrint').value,
+            allReceiptAutoPrint: document.getElementById('allReceiptPrint').checked ? "Y" : "N",
+            opdStickerPrint: document.getElementById('OPDStickerPrint').checked ? "Y" : "N",
+            thermalPrint: document.getElementById('thermalPrint').checked ? "Y" : "N"
+        };
+
+        console.log(payload);
+        if (counterName == '') {
+            jAlert('Please Enter Counter Name!!!');
+            return;
+        }
+        showProgressBar("progressBarDIV", "bodyDIV");
+
+
+        postApiToDebtor(JSON.stringify(payload), '/ws/debtorWS/save/counter', (response) => {
+            closeProgressBar("progressBarDIV");
+            if (response.success) {
+                clearCounterFields();
+                listCounter();
+                showTopSuccessMsg('Counter Saved Successfully !!');
+            } else {
+                jAlert(response.data.errorMessage);
+                clearCounterFields();
+            }
+        });
+    }
+
+
+    function listCounter() {
+        var counterName = document.getElementById('counterName').value.trim();
+        var counterID = document.getElementById('hiddenCounterID').value;
+
+        showProgressBar("progressBarDIV", "bodyDIV");
+
+        let payload = {
+            counterName: counterName,
+            counterID: counterID
+        };
+
+        getApiToDebtor(payload, "/ws/debtorWS/list/counter", (response) => {
+            closeProgressBar("progressBarDIV");
+            if (response.success) {
+                handleCounterListResp(response.data);
+            } else {
+                showTopErrorMsg(response.data.errorMessage);
+            }
+        });
+    }
+
+
+    function handleCounterListResp(resp) {
+        $('#counterList').html('');
+        var counters = '';
+        if (resp != '') {
+            //var jsonData = Ext.util.JSON.decode(resp);
+
+            for (var i = 0; i < resp.length; i++) {
+                var obj = resp[i];
+
+                counters = counters +
+                    '<div class="wideDIV RightScrollContent hoverSection cursor_auto">' +
+                        '<div class="wideDIV RightScrollContent hoverSection cursor_auto " onmouseover="showDeleteSymbol(this,\'Counter' + obj.counterID + '\');" onmouseout="hideDeleteSymbol(this,\'Counter' + obj.counterID + '\');" >' +
+                            '<div class="labelb5 borderBox pointer textEllipsis" style="padding-left: 10px; padding-right: 10px;width: calc(14% - 30px);" title="'+obj.counterName+'" onclick="editCounter(\'' + obj.counterName + '\',\'' + obj.opdRegnNReceipt + '\',\'' + obj.consultationAutoPrint + '\',\'' + obj.showPrintPreview + '\',\'' + obj.firstConsultationSticker + '\',\'' + obj.followupConsultationSticker + '\',\'' + obj.blankOPDSheet + '\',\'' + obj.allBillAutoPrint + '\',\'' + obj.allReceiptAutoPrint + '\',\'' + obj.opdStickerPrint + '\', \'' + obj.thermalPrint + '\',\'' + obj.counterID + '\');">' + obj.counterName + '</div>' +
+
+                            '<div class="labelb5 borderBox" style="width: 10%;padding-right: 10px;">' + obj.opdRegnNReceipt + '</div>' +
+
+                            '<div class="labelb5 borderBox" style="width: 8%;text-align: center; ' + (obj.consultationAutoPrint == 'Y' ? 'color :green' : 'color: red') + '">' +
+                                '<div style="width: 100%;margin-top: 2px;" class="fa_mednet ' + (obj.consultationAutoPrint == 'Y' ? 'fa-check' : 'fa-close') + '"></div>' +
+                            '</div>' +
+
+                            '<div class="labelb5 borderBox" style="width: 8%;text-align: center; ' + (obj.thermalPrint == 'Y' ? 'color :green' : 'color: red') + '">' +
+                                '<div class="fa_mednet ' + (obj.thermalPrint == 'Y' ? 'fa-check' : 'fa-close') + '" style="width: 100%;margin-top: 2px;"></div>' +
+                            '</div>' +
+
+                            '<div style="width: 8%;text-align: center;  ' + (obj.showPrintPreview == 'Y' ? 'color :green' : 'color: red') + '" class="labelb5 borderBox">' +
+                                '<div class="fa_mednet ' + (obj.showPrintPreview == 'Y' ? 'fa-check' : 'fa-close') + '" style="width: 100%;margin-top: 2px;"></div>' +
+                            '</div>' +
+                            '<div style="width: 8%;padding-right: 10px;" class="labelb5 borderBox">' +
+                                '<div class="pull_left" style="">' + obj.firstConsultationSticker + '</div>' +
+                            '</div>' +
+                            '<div class="labelb5 borderBox" style="width: 12%;padding-right: 10px;">' +
+                                '<div style="" class="pull_left">' + obj.followupConsultationSticker + '</div>' +
+                            '</div>' +
+                            '<div class="labelb5 borderBox" style="width: 8%;text-align: center; ' + (obj.blankOPDSheet == 'Y' ? 'color :green' : 'color: red') + '">' +
+                                '<div style="width: 100%;margin-top: 2px;" class="fa_mednet ' + (obj.blankOPDSheet == 'Y' ? 'fa-check' : 'fa-close') + '"></div>' +
+                            '</div>' +
+                            '<div class="labelb5 borderBox" style="width: 8%;padding-right: 10px;">' +
+                                '<div style="" class="pull_left">' + obj.allBillAutoPrint + '</div>' +
+                            '</div>' +
+                            '<div class="labelb5 borderBox" style="width: 8%;text-align: center; ' + (obj.allReceiptAutoPrint == 'Y' ? 'color :green' : 'color: red') + '">' +
+                                '<div style="width: 100%;margin-top: 2px;" class="fa_mednet ' + (obj.allReceiptAutoPrint == 'Y' ? 'fa-check' : 'fa-close') + '"></div>' +
+                            '</div>' +
+                            '<div class="labelb5 borderBox" style="width: 8%;text-align: center; ' + (obj.opdStickerPrint == 'Y' ? 'color :green' : 'color: red') + '">' +
+                                '<div style="width: 100%;margin-top: 2px;" class="fa_mednet ' + (obj.opdStickerPrint == 'Y' ? 'fa-check' : 'fa-close') + '"></div>' +
+                            '</div>' +
+                            '<div class="nomarginTB980 labelb5 pull_right" style="margin-right: 10px; display: none;" id="deleteCounter' + obj.counterID + '" onclick="deleteCounterEntry(' + obj.counterID + ');"> <div class="fa_mednet fa-times fa-common-close pointer"></div> </div>' +
+                        '</div>' +
+                    '</div>';
+            }
+        }
+        $('#counterList').html(counters);
+        manageCommonListScroll("counterList", "counterListHeader");
+    }
+
+    function showDeleteSymbol(obj, ID) {
+        obj.style.color = "#8DBFFE";
+        document.getElementById('delete' + ID).style.display = "block";
+    }
+
+    function hideDeleteSymbol(obj, ID) {
+        obj.style.color = "#5E5F5F";
+        document.getElementById('delete' + ID).style.display = "none";
+    }
+
+    function deleteCounterEntry(ID) {
+        jConfirm('Do you want to delete ?', 'Counter', function(r) {
+            if (r == true) {
+                showProgressBar("progressBarDIV", "bodyDIV");
+                let payload = {
+                    counterID: ID
+                };
+
+                deleteApiToDebtor(payload, "/ws/debtorWS/delete/counter", (response) => {
+                    closeProgressBar("progressBarDIV");
+                    if (response.success) {
+                        if (response.data == '') {
+                            showTopSuccessMsg('Counter Deleted Successfully !!');
+                            listCounter();
+                        }
+                    } else {
+                        jAlert(response.data.errorMessage);
+                    }
+                });
+            }
+        });
+    }
+
+    function editCounter(counterName, consultationCounterFlag, consultationAutoPrint, showPrintPreview, firstConsultationSticker, followupConsultationSticker, blankOPDSheet, allBillAutoPrint, allReceiptAutoPrint, opdStickerPrint, thermalPrint, counterID) {
+        document.getElementById('counterName').value = counterName;
+        document.getElementById('hiddenCounterID').value = counterID;
+        document.getElementById('consultationCounterFlag').value = consultationCounterFlag;
+        document.getElementById('consultationAutoPrint').checked = (consultationAutoPrint == 'Y' ? true : false);
+        if (consultationAutoPrint == 'Y') {
+            enableSettingDIV();
+        } else {
+            disableSettingDIV();
+        }
+
+        document.getElementById('printPreview').checked = (showPrintPreview == 'Y' ? true : false);
+        document.getElementById('blankOPDSheet').checked = (blankOPDSheet == 'Y' ? true : false);
+        document.getElementById('allReceiptPrint').checked = (allReceiptAutoPrint == 'Y' ? true : false);
+        document.getElementById('OPDStickerPrint').checked = (opdStickerPrint == 'Y' ? true : false);
+        document.getElementById('thermalPrint').checked = (thermalPrint == 'Y' ? true : false);
+        document.getElementById('firstConsultationSticker').value = firstConsultationSticker;
+        document.getElementById('followupConsultationSticker').value = followupConsultationSticker;
+        document.getElementById('allBillAutoPrint').value = allBillAutoPrint;
+
+    }
+
+    function clearCounterFields() {
+        document.getElementById('counterName').value = '';
+        document.getElementById('hiddenCounterID').value = 0;
+        document.getElementById('consultationAutoPrint').checked = false;
+        disableSettingDIV();
+        document.getElementById('printPreview').checked = false;
+        document.getElementById('firstConsultationSticker').value = 'NONE';
+        document.getElementById('followupConsultationSticker').value = 'NONE';
+        document.getElementById('blankOPDSheet').checked = false;
+        document.getElementById('allBillAutoPrint').value = 'NONE'
+        document.getElementById('OPDStickerPrint').checked = false;
+        document.getElementById('thermalPrint').checked = false;
+        document.getElementById('allReceiptPrint').checked = false;
+        document.getElementById('consultationCounterFlag').value = 'SIMPLE';
+    }
+
+    function enableDisableSettingDIV() {
+        if (document.getElementById("consultationAutoPrint").checked) {
+            enableSettingDIV();
+        } else {
+            disableSettingDIV();
+        }
+    }
+
+    function enableSettingDIV() {
+        $('#settingsDIV').removeClass("disabledDIV");
+        document.getElementById("printPreview").disabled = false;
+        document.getElementById("firstConsultationSticker").disabled = false;
+        document.getElementById("followupConsultationSticker").disabled = false;
+        document.getElementById("blankOPDSheet").disabled = false;
+        document.getElementById("allBillAutoPrint").disabled = false;
+        document.getElementById("allReceiptPrint").disabled = false;
+        document.getElementById("OPDStickerPrint").disabled = false;
+    }
+
+    function disableSettingDIV() {
+        $('#settingsDIV').addClass("disabledDIV");
+        document.getElementById("printPreview").disabled = true;
+        document.getElementById("firstConsultationSticker").disabled = true;
+        document.getElementById("followupConsultationSticker").disabled = true;
+        document.getElementById("blankOPDSheet").disabled = true;
+        document.getElementById("allBillAutoPrint").disabled = true;
+        document.getElementById("allReceiptPrint").disabled = true;
+        document.getElementById("OPDStickerPrint").disabled = true;
+    }
+
+</script>
+
